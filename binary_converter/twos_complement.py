@@ -1,6 +1,6 @@
 import math
 base = 2
-bit = 8
+bit = 3
 
 
 def twos_complement(x):
@@ -10,16 +10,33 @@ def twos_complement(x):
         negative = True
         
         val = int(dec[1:])
-        val = len(val)*
-        pm = "1"
+        #print("1. val = " + str(val))
     else:
         val = int(dec)
-        pm = "0"
+        #print("1. val = " + str(val))
     
-    binary = ""
     if negative:
-        val 
+        val = (base**bit -1)-val+1
+        #print("2. val = " + str(val))
     
+    bin_val = ""
+
+        
+    
+    for i in range(bit-1, -1, -1):
+        #print("i = " + str(i))
+        #print("val = " + str(val))
+        step = base**i
+        #print("step = " + str(step))
+        if val >= step:
+            bin_val += str(math.floor(val/step))
+            #print("bin_val = " + str(bin_val))
+            val -= step
+        else:
+            bin_val += "0"
+            #print("bin_val = " + str(bin_val))
+        
+    return bin_val
     
     '''
     bi = ""
@@ -51,19 +68,22 @@ def twos_complement(x):
 inp = ""
 dec_to_bin = True
 while not inp.lower() == "x":
-    inp = input("convert: ")
+    inp = input("base = " + str(base) + " with " + str(bit) + " bits. Convert from " + dec_to_bin*"decimal to binary" + (1-dec_to_bin)*"binary to deciaml" + ": ")
     
     if inp.lower() == "b":
-        base = input("base: ")
+        inp = 0
+        while not int(inp) in [2, 3, 4, 5, 6, 7, 8, 9, 10, 16]:
+            inp = input("base: ")
+        base = int(inp)
     elif inp.lower() == "n":
-        bits = input("bits: ")
+        bit = int(input("bits: "))
     elif inp.lower() == "t":
         dec_to_bin = not dec_to_bin
     
     elif dec_to_bin and not inp.lower() == "x":
-        twos_complement(inp)
+        print(twos_complement(inp))
         
     elif not dec_to_bin and not inp.lower() == "x":
-        print("bin to dec")
+        print(decimal_val(inp))
         
     
