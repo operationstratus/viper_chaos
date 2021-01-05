@@ -1,6 +1,7 @@
 import math
-base = 2
-bit = 3
+BASE = 2
+BIT = 5
+HEXA = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
 
 
 def twos_complement(x):
@@ -16,25 +17,35 @@ def twos_complement(x):
         #print("1. val = " + str(val))
     
     if negative:
-        val = (base**bit -1)-val+1
+        val = (BASE**BIT -1)-val+1
         #print("2. val = " + str(val))
     
     bin_val = ""
 
         
     
-    for i in range(bit-1, -1, -1):
+    for i in range(BIT-1, -1, -1):
         #print("i = " + str(i))
         #print("val = " + str(val))
-        step = base**i
+        step = BASE**i
         #print("step = " + str(step))
+        '''
         if val >= step:
-            bin_val += str(math.floor(val/step))
+            
+            
+            
+                
+            bin_val += HEXA[math.floor(val/step)]
             #print("bin_val = " + str(bin_val))
-            val -= step
+            val -= step * math.floor(val/step)
         else:
             bin_val += "0"
             #print("bin_val = " + str(bin_val))
+        '''
+        
+        bin_val += HEXA[math.floor(val/step)]
+        #print("bin_val = " + str(bin_val))
+        val -= step * math.floor(val/step)
         
     return bin_val
     
@@ -42,8 +53,8 @@ def twos_complement(x):
     bi = ""
     
     
-    for i in range(bit - 2, -1, -1):
-        step = base ** i
+    for i in range(BIT - 2, -1, -1):
+        step = BASE ** i
         #print("Val: " + str(val) + ", step = " + str(step))
         if val >= step:
             bi +=  str(math.floor(val / step))
@@ -64,26 +75,44 @@ def twos_complement(x):
     
     return pm + bi'''
 
+def inp_in_range(inp):
+    inp = int(inp)
+    return inp <= BASE**(BIT-2) and inp >= -BASE**(BIT-1)
+    
+
+def bin_to_dec(x):
+    x = str(x)
+    dec = 0
+    exp = 0
+    for i in range(len(x)-1, -1, -1):
+        if i == 0:
+            dec -= int(x[i]) * BASE**exp
+        else:
+            dec += int(x[i]) * BASE**exp
+        exp += 1
+    return str(dec)
 
 inp = ""
 dec_to_bin = True
 while not inp.lower() == "x":
-    inp = input("base = " + str(base) + " with " + str(bit) + " bits. Convert from " + dec_to_bin*"decimal to binary" + (1-dec_to_bin)*"binary to deciaml" + ": ")
+    inp = input("BASE = " + str(BASE) + " with " + str(BIT) + " BITs. Convert from " + dec_to_bin*"decimal to binary" + (1-dec_to_bin)*"binary to deciaml" + ": ")
     
     if inp.lower() == "b":
         inp = 0
         while not int(inp) in [2, 3, 4, 5, 6, 7, 8, 9, 10, 16]:
             inp = input("base: ")
-        base = int(inp)
+        BASE = int(inp)
     elif inp.lower() == "n":
-        bit = int(input("bits: "))
+        BIT = int(input("bits: "))
     elif inp.lower() == "t":
         dec_to_bin = not dec_to_bin
     
-    elif dec_to_bin and not inp.lower() == "x":
+    elif dec_to_bin and not inp.lower() == "x" and inp_in_range(inp):
         print(twos_complement(inp))
         
-    elif not dec_to_bin and not inp.lower() == "x":
-        print(decimal_val(inp))
+    elif not dec_to_bin and not inp.lower() == "x" and inp_in_range(inp):
+        print(bin_to_dec(inp))
+    elif not inp_in_range(inp):
+        print(str("number too small or too large"))
         
     
