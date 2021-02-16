@@ -76,21 +76,35 @@ def twos_complement(x):
     return pm + bi'''
 
 def inp_in_range(inp):
-    inp = int(inp)
-    return inp <= BASE**(BIT-2) and inp >= -BASE**(BIT-1)
+    if not inp == "x":
+        inp = int(inp)
+        return inp <= BASE**(BIT-2) and inp >= -BASE**(BIT-1)
     
 
 def bin_to_dec(x):
-    x = str(x)
+    negative = False
+    if HEXA.index(str(x)[0]) == BASE-1:
+        print("HEXA obj = " + str(HEXA.index(str(x)[0])))
+        negative = True
     dec = 0
-    exp = 0
+    
     for i in range(len(x)-1, -1, -1):
-        if i == 0:
-            dec -= int(x[i]) * BASE**exp
-        else:
-            dec += int(x[i]) * BASE**exp
-        exp += 1
+        dec += HEXA.index(str(x)[i])*BASE**i
+        print("i = " + str(i))
+        print("digit = " + str(x)[i])
+        print(str(HEXA.index(str(x)[i])*BASE**i))
+    if negative:
+        dec = BASE**(len(str(x))+1)
     return str(dec)
+
+
+
+def get_bits(x):
+    i = 0
+    while x / BASE**i < 1:
+        i += 1
+    print(str(i+1))
+        
 
 inp = ""
 dec_to_bin = True
@@ -99,7 +113,7 @@ while not inp.lower() == "x":
     
     if inp.lower() == "b":
         inp = 0
-        while not int(inp) in [2, 3, 4, 5, 6, 7, 8, 9, 10, 16]:
+        while not int(inp) in range(2, 17):
             inp = input("base: ")
         BASE = int(inp)
     elif inp.lower() == "n":
@@ -107,12 +121,13 @@ while not inp.lower() == "x":
     elif inp.lower() == "t":
         dec_to_bin = not dec_to_bin
     
-    elif dec_to_bin and not inp.lower() == "x" and inp_in_range(inp):
-        print(twos_complement(inp))
+    elif dec_to_bin and not inp.lower() == "x":
+        if inp_in_range(inp):
+            print(twos_complement(inp))
         
-    elif not dec_to_bin and not inp.lower() == "x" and inp_in_range(inp):
+    elif not dec_to_bin and not inp.lower() == "x":
         print(bin_to_dec(inp))
-    elif not inp_in_range(inp):
+    elif not inp_in_range(inp) and not inp.lower() == "x":
         print(str("number too small or too large"))
         
     
