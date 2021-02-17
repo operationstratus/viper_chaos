@@ -25,9 +25,10 @@ class Tile:
     def get_character(self):
         return self.__character
 
-BattleMap = [] # list with all the Tiles
+
 
 def setup():
+    BattleMap = [] # list with all the Tiles
     i = 0
     for w in range(n):
         for h in range(n):
@@ -38,8 +39,9 @@ def setup():
             else:
                 boat = False
             BattleMap.append(Tile(boat))
+    return BattleMap
 
-def update():
+def update(BattleMap):
     i = 0
     for Tile in BattleMap:
         here print the right amount of "|" and "-" and " " in some clever way
@@ -50,7 +52,7 @@ def update():
             print("\n") # begin a new row
 
 def main():
-    setup()
+    BattleMap = setup()
     while not wanting to quit:
         some if statements to navigate between options
         
@@ -65,7 +67,7 @@ def main():
         else:
             BOOMS += 0
             
-        update()
+    update(BattleMap)
         
 
 
