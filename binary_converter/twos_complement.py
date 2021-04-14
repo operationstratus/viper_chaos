@@ -1,111 +1,107 @@
 import math
-BASE = 2
-BIT = 5
-HEXA = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
 
-
-def twos_complement(x):
-    negative = False
-    dec = str(x)
-    if dec[0] == "-":
-        negative = True
+class Converter:
+    def __init__(self):
+        self.__from_dec = True
+        self.__base = 2
+        self.__bits = 16
+        self.__chars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
+    
+    def main(self):
+        inp = ""
+        while inp not in ["x", "b", "n", "t"]:
+            if not inp == "":
+                print(str(self.convert(inp)))
+            promt = f"\nBase: {self.__base}\nBits: {self.__bits}\n" + self.__from_dec*"From Decimal" + (1-self.__from_dec)*"To Decimal" + "\n: "
+            inp = input(promt)
+    
+        if inp == "b":
+            self.change_base()
+        if inp == "n":
+            self.change_bits()
+        if inp == "t":
+            self.toggle_mode()
         
-        val = int(dec[1:])
-        #print("1. val = " + str(val))
+    def change_base(self):
+        inp = 0
+        while int(inp) not in range(2, 17):
+            inp = input("Base: ")
+        self.__base = inp
+        self.main()
+    
+    def change_bits(self):
+        inp = 0
+        while int(inp) <= 1:
+            inp = input("Base: ")
+        self.__base = inp
+        self.main()
+        
+    def toggle_mode(self):
+        self.__from_dec = not self.__from_dec
+        self.main()
+
+    def convert(self, inp):
+        if not self.__from_dec:
+            if str(inp)[0]=
+
+            '''
+            negative = (str(inp)[0] == "-")
+            if negative:
+                inp = int(str(inp)[1:])
+            for digit in str(inp):
+            '''
+        
+        
+        return ans
+        
+
+            
+
+
+
+'''
+def main():
+    
+   
+    inp = ""
+    
+    while inp not in ["x", "b", "n", "t"]:
+        promt = f"Base: {BASE}\nBits: {BITS}\n" + FROM_DEC*"From Decimal" + (1-FROM_DEC)*"To Decimal" + "\n: "
+        inp = input(promt)
+    
+    if inp == "b":
+        change_base()
+    if inp == "n":
+        change_bits()
+    if inp == "t":
+        toggle_mode()
+    
+
+def change_base():
+    inp = 0
+    while int(inp) not in range(2, 17):
+        inp = input("Base: ")
+    BASE = inp
+    main()
+    
+def change_bits():
+    return input("Bits: ")
+    main()
+    
+def toggle_mode(from_dec):
+    if from_dec:
+        from_dec = False
     else:
-        val = int(dec)
-        #print("1. val = " + str(val))
+        from_dec = True
+    return from_dec
+    main()
     
-    if negative:
-        val = (BASE**BIT -1)-val+1
-        #print("2. val = " + str(val))
-    
-    bin_val = ""
+main()'''
 
-        
-    
-    for i in range(BIT-1, -1, -1):
-        #print("i = " + str(i))
-        #print("val = " + str(val))
-        step = BASE**i
-        #print("step = " + str(step))
-        '''
-        if val >= step:
-            
-            
-            
-                
-            bin_val += HEXA[math.floor(val/step)]
-            #print("bin_val = " + str(bin_val))
-            val -= step * math.floor(val/step)
-        else:
-            bin_val += "0"
-            #print("bin_val = " + str(bin_val))
-        '''
-        
-        bin_val += HEXA[math.floor(val/step)]
-        #print("bin_val = " + str(bin_val))
-        val -= step * math.floor(val/step)
-        
-    return bin_val
-    
-    '''
-    bi = ""
-    
-    
-    for i in range(BIT - 2, -1, -1):
-        step = BASE ** i
-        #print("Val: " + str(val) + ", step = " + str(step))
-        if val >= step:
-            bi +=  str(math.floor(val / step))
-            #print(bi)
-            val -= step
-        else:
-            bi += "0"
-            #print(bi)
-    if neg:
-        bi2 = ""
-        for dig in bi:
-            if dig == "0":
-                bi2 += "1"
-            else:
-                bi2 += "0"
-        bi = bi2
-        #print(bi)
-    
-    return pm + bi'''
+Converter = Converter()
+Converter.main()
 
-def inp_in_range(inp):
-    if not inp == "x":
-        inp = int(inp)
-        return inp <= BASE**(BIT-2) and inp >= -BASE**(BIT-1)
-    
-
-def bin_to_dec(x):
-    negative = False
-    if HEXA.index(str(x)[0]) == BASE-1:
-        print("HEXA obj = " + str(HEXA.index(str(x)[0])))
-        negative = True
-    dec = 0
-    
-    for i in range(len(x)-1, -1, -1):
-        dec += HEXA.index(str(x)[i])*BASE**i
-        print("i = " + str(i))
-        print("digit = " + str(x)[i])
-        print(str(HEXA.index(str(x)[i])*BASE**i))
-    if negative:
-        dec = BASE**(len(str(x))+1)
-    return str(dec)
-
-
-
-def get_bits(x):
-    i = 0
-    while x / BASE**i < 1:
-        i += 1
-    print(str(i+1))
-        
-
+'''
 inp = ""
 dec_to_bin = True
 while not inp.lower() == "x":
@@ -130,4 +126,4 @@ while not inp.lower() == "x":
     elif not inp_in_range(inp) and not inp.lower() == "x":
         print(str("number too small or too large"))
         
-    
+'''
